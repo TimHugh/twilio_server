@@ -1,6 +1,5 @@
 require 'bundler'
 Bundler.require
-require 'cgi'
 
 module TwilioServer
   class Base
@@ -13,12 +12,17 @@ module TwilioServer
       attr_writer :status
 
       def call(env)
-        @params = env['QUERY_STRING'].nil? ? {} : CGI.parse(env['QUERY_STRING'])
+        @params = parse_query_string(env['QUERY_STRING'])
         [
           status,
           { 'Content-Type' => 'text/html' },
           [encode_response(respond)]
         ]
+      end
+
+      def parse_query_string(query_string)
+        return {} if query_string.nil? || query_string.empty?
+        Rack::Utils.parse_query(query_string)
       end
 
       def encode_response(message)
