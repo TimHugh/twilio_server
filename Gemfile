@@ -7,5 +7,6 @@ gem 'rack'
 gem 'twilio-ruby'
 
 group :test, :development do
+  gem 'guard-rake'
   gem 'pry-byebug'
 end
