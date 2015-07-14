@@ -1,1 +1,8 @@
-*.gem
+# ignore gem files
+/*.gem
+
+# ignore secrets!
+/.env
+
+# ignore test coverage data
+/coverage
