@@ -15,6 +15,7 @@ module TwilioServer
       def call(env)
         @request = Rack::Request.new(env)
         @params = parse_query_string(env['QUERY_STRING'])
+        @params.merge! request.POST if request.post?
         [
           status,
           { 'Content-Type' => 'text/html' },
