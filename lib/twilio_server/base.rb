@@ -5,6 +5,7 @@ module TwilioServer
   class Base
     class << self
       attr_reader :params
+      attr_reader :request
 
       def status
         @status ||= 200
@@ -12,6 +13,7 @@ module TwilioServer
       attr_writer :status
 
       def call(env)
+        @request = Rack::Request.new(env)
         @params = parse_query_string(env['QUERY_STRING'])
         [
           status,
